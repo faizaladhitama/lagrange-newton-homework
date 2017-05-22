@@ -1,4 +1,4 @@
-function [y,a] = lagrange(t,x)
+function [y] = lagrange(t,x)
     % a merupakan vektor dari koefisien polinomial
     % t merupakan titik-titik yang hasilnya diketahui
     % x merupakan titik dimana nilai fungsinya dicari
@@ -9,13 +9,20 @@ function [y,a] = lagrange(t,x)
     
     for i = 1:n
         if(ne(f(i),0))
+            c = 1;
             for j = 1:n
                 if(ne(i,j))
-                    a(i) = a(i) * (x - t(j)) / (t(i) - t(j));
+                    c = c * (t(i) - t(j));
                 end
             end
-            a(i) = a(i)*f(i);
+            for j = 1:n
+                if(ne(i,j))
+                    a(i) = a(i) * (x - t(j));
+                end
+            end
+            a(i) = a(i)/c;
         end
+        a(i) = a(i)*f(i);
     end
     
     for i = 1:n
